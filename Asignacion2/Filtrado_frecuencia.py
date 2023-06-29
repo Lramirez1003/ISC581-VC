@@ -1,9 +1,18 @@
 import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
+
+#!!!!! ASEGURAR QUE IMAGENES ESTEN EN LA MISMA CARPETA QUE EL PROGRAMA !!!!!!#
+
+#Simplemente eliminar comentarios para probar las imagenes
+
 img = cv.imread('plant-sp-noise.tif', cv.IMREAD_GRAYSCALE)
-assert img is not None, "file could not be read, check with os.path.exists()"
+#img = cv.imread('ophrys.tif', cv.IMREAD_GRAYSCALE)
+
 #Transformacion de Fourier con Numpy
+
+
+assert img is not None, "file could not be read, check with os.path.exists()"
 f = np.fft.fft2(img)
 fshift = np.fft.fftshift(f)
 magnitude_spectrum = 20*np.log(np.abs(fshift))
@@ -12,8 +21,6 @@ plt.title('Input Image'), plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(magnitude_spectrum, cmap = 'gray')
 plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
 plt.show()
-
-
 rows, cols = img.shape
 crow,ccol = rows//2 , cols//2
 fshift[crow-30:crow+31, ccol-30:ccol+31] = 0
